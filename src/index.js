@@ -4,12 +4,19 @@ const app = Vue.createApp({
   template: `
     <div>
       <input
-        v-bind:value="value"
-        v-on:input="input"
-      />
-      <div class='red'>
-        {{errorMessage}}
-      </div>
+        type="checkbox"
+        v-model="value"
+        value="a"
+      >
+
+      <input
+        type="checkbox"
+        v-model="value"
+        value="b"
+      >
+
+      {{value}}
+
     </div>
 
     <button
@@ -31,7 +38,7 @@ const app = Vue.createApp({
     return {
       count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      value: "",
+      value: ["a", "b"],
     };
   },
 
@@ -48,10 +55,6 @@ const app = Vue.createApp({
   },
 
   methods: {
-    input($event) {
-      this.value = $event.target.value;
-    },
-
     classColor(count) {
       return this.isEven(count) ? "blue" : "red";
     },
