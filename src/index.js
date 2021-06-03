@@ -3,12 +3,18 @@ import * as Vue from "vue/dist/vue.esm-bundler.js";
 const Num = {
   props: ["number"],
   template: `
-    <div v-bind:class="classColor(number)">
+    <button
+      v-bind:class="classColor(number)"
+      v-on:click="click"
+    >
       {{number}}
-    </div>
+    </button>
   `,
 
   methods: {
+    click() {
+      this.$emit("chosen", this.number);
+    },
     classColor(number) {
       return this.isEven(number) ? "blue" : "red";
     },
@@ -25,48 +31,24 @@ const app = Vue.createApp({
   },
 
   template: `
-    <div>
-      <input
-        type="checkbox"
-        v-model="value"
-        value="a"
-      >
+    <num
+      v-for="number in numbers"
+      v-bind:number="number"
+      v-on:chosen="addNumber"
+    />
 
-      <input
-        type="checkbox"
-        v-model="value"
-        value="b"
-      >
-
-      {{value}}
-
-    </div>
-
-    <button
-    v-on:click="increment"
-    >
-      Increment
-    </button>
-
-    <p
-    v-bind:class="'blue'"
-    >
-      <div>
-        {{count}}
-      </div>
-    </p>
+    <hr/>
 
     <num
+      v-for="number in numberHistory"
       v-bind:number="number"
-      v-for="number in numbers"
     />
   `,
 
   data() {
     return {
-      count: 0,
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      value: ["a", "b"],
+      numberHistory: [],
     };
   },
 
@@ -74,17 +56,11 @@ const app = Vue.createApp({
     evenList() {
       return this.numbers.filter((num) => this.isEven(num));
     },
-
-    errorMessage() {
-      if (this.value.length < 5) {
-        return "kependekan";
-      }
-    },
   },
 
   methods: {
-    increment() {
-      this.count += 1;
+    addNumber(number) {
+      this.numberHistory.push(number);
     },
   },
 });
