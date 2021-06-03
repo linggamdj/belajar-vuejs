@@ -2,11 +2,16 @@ import * as Vue from "vue/dist/vue.esm-bundler.js";
 
 const app = Vue.createApp({
   template: `
-    <button v-on:click="increment">Increment</button>
-    <p>{{count}}</p>
-    <div v-for="number in evenList">
-      {{number}}
-    </div>
+    <button
+    v-on:click="increment"
+    >
+      Increment
+    </button>
+    <p
+    v-bind:class="classColor(count)"
+    >
+      {{count}}
+    </p>
   `,
 
   data() {
@@ -23,6 +28,10 @@ const app = Vue.createApp({
   },
 
   methods: {
+    classColor(count) {
+      return this.isEven(count) ? "blue" : "red";
+    },
+
     increment() {
       this.count += 1;
     },
