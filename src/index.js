@@ -1,19 +1,30 @@
 import * as Vue from "vue/dist/vue.esm-bundler.js";
 
-const Example = {
+const Num = {
+  props: ["number"],
   template: `
-    <h1>made with vue component</h1>
+    <div v-bind:class="classColor(number)">
+      {{number}}
+    </div>
   `,
+
+  methods: {
+    classColor(number) {
+      return this.isEven(number) ? "blue" : "red";
+    },
+
+    isEven(number) {
+      return number % 2 === 0;
+    },
+  },
 };
 
 const app = Vue.createApp({
   components: {
-    Example,
+    Num,
   },
 
   template: `
-    <example />
-
     <div>
       <input
         type="checkbox"
@@ -38,12 +49,17 @@ const app = Vue.createApp({
     </button>
 
     <p
-    v-bind:class="classColor(count)"
+    v-bind:class="'blue'"
     >
       <div>
         {{count}}
       </div>
     </p>
+
+    <num
+      v-bind:number="number"
+      v-for="number in numbers"
+    />
   `,
 
   data() {
@@ -67,16 +83,8 @@ const app = Vue.createApp({
   },
 
   methods: {
-    classColor(count) {
-      return this.isEven(count) ? "blue" : "red";
-    },
-
     increment() {
       this.count += 1;
-    },
-
-    isEven(number) {
-      return number % 2 === 0;
     },
   },
 });
