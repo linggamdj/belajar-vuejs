@@ -1,7 +1,19 @@
 import * as Vue from "vue/dist/vue.esm-bundler.js";
 
-const app = Vue.createApp({
+const Example = {
   template: `
+    <h1>made with vue component</h1>
+  `,
+};
+
+const app = Vue.createApp({
+  components: {
+    Example,
+  },
+
+  template: `
+    <example />
+
     <div>
       <input
         type="checkbox"
